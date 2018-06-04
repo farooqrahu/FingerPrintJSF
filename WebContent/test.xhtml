@@ -1,0 +1,80 @@
+<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN" "http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
+<html xmlns="http://www.w3.org/1999/xhtml"
+ xmlns:ui="http://java.sun.com/jsf/facelets"
+ xmlns:f="http://java.sun.com/jsf/core"
+ xmlns:h="http://java.sun.com/jsf/html">
+
+
+	<h:head>
+	<title>JSF Demo For FingerPrint</title>
+	<script src="jquery-1.8.2.js"></script>
+    <script src="Nitgen.js"></script>
+    <script type="text/javascript" src="http://cdn.jsdelivr.net/jquery.cookie/1.3.1/jquery.cookie.js"></script>
+  
+ 	<script type="text/javascript" language="javascript">  
+ 	var quality = 60; //(1 to 100) (recommanded minimum 55)
+ 	  var timeout = 10; // seconds (minimum=10(recommanded), maximum=60, unlimited=0 )
+
+ 	        function Capture() {
+ 	            try {
+//  	                document.getElementById('txtStatus').value = "";
+  	                    document.getElementById('HRA:imgFinger').src = "data:image/bmp;base64,";
+//  	                document.getElementById('txtQuality').value = ""
+//  	                document.getElementById('txtNFIQ').value = "";
+//  	                document.getElementById('txtIsoTemplate').value = "";
+//  	                document.getElementById('txtIsoImage').value = "";
+ 	                    document.getElementById('HRA:txtRawData').value = "";
+//  	                document.getElementById('txtWsqData').value = "";
+
+ 	                var res = CaptureFinger(quality, timeout);
+ 				
+ 	                if (res.httpStaus) {
+
+//  	                    document.getElementById('txtStatus').value = "ErrorCode: " + res.data.ErrorCode + " ErrorDescription: " + res.data.ErrorDescription;
+
+ 	                    if (res.data.ErrorCode == "0") {
+  	                        	document.getElementById('HRA:imgFinger').src = "data:image/bmp;base64," + res.data.BitmapData;
+//  	                        document.getElementById('txtQuality').value = res.data.Quality;
+//  	                        document.getElementById('txtNFIQ').value = res.data.Nfiq;
+//  	                        document.getElementById('txtIsoTemplate').value = res.data.IsoTemplate;
+//  	                        document.getElementById('txtIsoImage').value = res.data.IsoImage;
+  	                        	document.getElementById('HRA:txtRawData').value = res.data.BitmapData;
+//  	                        document.getElementById('txtWsqData').value = res.data.WsqImage;
+ 	                    }
+ 	                }
+ 	                else {
+ 	                    alert(res.err);
+ 	                }
+ 	            }
+ 	            catch (e) {
+ 	                alert(e);
+ 	            }
+ 	            return false;
+ 	        }
+ 	  
+ 	        
+
+	</script>
+	</h:head>
+	
+	
+	<h:body>
+	
+	<h:form id="HRA">
+	<h:outputText value="Finger Print Demo" />
+	<br/>
+	<h:commandButton id="submit-button" value="capture" onclick="return Capture()" type="submit"/> 
+	<br/>
+	<h:graphicImage  id="imgFinger"  width="120px" height="150px" alt="Finger Print will Appear Here" /> 
+	<br/>
+	<h:outputText value="Base 64 String:" /> 
+	    <h:inputText id="txtRawData"  label="Raw Data" value="#{test1.value}"
+    size="15" >  
+        </h:inputText> 
+        <h:commandButton  value="submit" action="#{test1.submit}"/> 
+        
+	</h:form>
+	</h:body>
+	
+	
+</html>
